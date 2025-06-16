@@ -6,7 +6,6 @@ const userRoutes = require('./routes/userRoutes')
 const eventRoutes = require('./routes/eventRoutes')
 const errorHandler = require('./middleware/errorHandler')
 
-// CORS seguro: SOLO tu frontend de Vercel y tu localhost
 const allowedOrigins = [
   'https://arianvision.vercel.app',
   'http://localhost:5173'
