@@ -1,4 +1,4 @@
-const express = require('express')
+const express = require('express') 
 const cors = require('cors')
 const app = express()
 const authRoutes = require('./routes/authRoutes')
@@ -6,7 +6,17 @@ const userRoutes = require('./routes/userRoutes')
 const eventRoutes = require('./routes/eventRoutes')
 const errorHandler = require('./middleware/errorHandler')
 
-app.use(cors())
+// CORS seguro: SOLO tu frontend de Vercel y tu localhost
+const allowedOrigins = [
+  'https://arianvision.vercel.app',
+  'http://localhost:5173'
+];
+
+app.use(cors({
+  origin: allowedOrigins,
+  optionsSuccessStatus: 200
+}));
+
 app.use(express.json())
 
 app.use('/api/auth', authRoutes)
