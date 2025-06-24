@@ -1,30 +1,29 @@
 const Event = require('../models/Event')
 
-exports.getAllEvents = async (req, res, next) => {
+exports.getAllEvents = async (req, res) => {
   try {
     const events = await Event.find()
-      .sort({ date: 1 })
-      .populate('attendees', 'name email')
     res.json(events)
   } catch (err) {
-    next(err)
+    res
+      .status(500)
+      .json({ message: 'Error al obtener eventos', error: err.message })
   }
 }
 
-exports.getEventById = async (req, res, next) => {
+exports.getEventById = async (req, res) => {
   try {
     const event = await Event.findById(req.params.id)
-      .populate('attendees', 'name email')
-      .populate('organizer', 'name email')
     if (!event) {
       return res.status(404).json({ message: 'Evento no encontrado' })
     }
     res.json(event)
   } catch (err) {
-    next(err)
+    res
+      .status(500)
+      .json({ message: 'Error al buscar evento', error: err.message })
   }
 }
-
 exports.createEvent = async (req, res) => {
   try {
     const { title, date, location, description, capacity } = req.body
